@@ -4,12 +4,13 @@ import cv2 as cv
 import numpy as np
 from random import randint, choice
 
-skull_path = r"path\to\file\skull.jpg"
-ghost_path = r"path\to\file\ghost.jpg"
+skull_path = r"C:\Users\afondacaro\ghostHunter\skull.png"
+ghost_path = r"C:\Users\afondacaro\ghostHunter\ghost.jpg"
 skull_img = cv.imread(skull_path)
 ghost_img = cv.imread(ghost_path)
 
 images = [skull_img, ghost_img]
+box_img = np.ones((100,430,3),dtype='uint8')*255
 
 # classifier_path = r"C:\Users\afondacaro\ghostHunter\faceClassifier.xml"
 # I also have a face classifier in here, this file is a mess
@@ -64,7 +65,19 @@ while True:
     for (x, y, w, h) in faces:
         cv.rectangle(background, (x, y), (x+w, y+h), (255, 0, 0), 2)'''
     font = cv.FONT_HERSHEY_SIMPLEX
-    cv.putText(background,"Ghost Finder",(10,30), font, 1,(255,255,255),2,cv.LINE_AA)
+    temp = alpha * 100
+    if temp < 50:
+        distance_to_fifty = 50 - temp
+        result = temp + (distance_to_fifty * 2)
+    else:
+        distance_to_fifty = temp - 50
+        result = temp - (distance_to_fifty * 2)
+
+    
+    box = cv.addWeighted(background[10:80,10:390,:],0,box_img[0:70,0:380,:],1,0)
+    # Change the region with the result
+    background[10:80,10:390] = box
+    cv.putText(background, f"Ghost detection: {round(result, 2)}%",(15,55), font, 1,(0, 255, 0),2,cv.LINE_AA)
     # heatmap = cv.applyColorMap(background, cv.COLORMAP_HOT) (If you want the image to be like a heatmap thing)
     grayscale = cv.cvtColor(background, cv.COLOR_BGR2GRAY)
     cv.imshow('Ghost Hunter', grayscale)
