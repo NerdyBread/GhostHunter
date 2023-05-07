@@ -12,9 +12,6 @@ ghost_img = cv.imread(ghost_path)
 images = [skull_img, ghost_img]
 box_img = np.ones((100,430,3),dtype='uint8')*255
 
-# classifier_path = r"C:\Users\afondacaro\ghostHunter\faceClassifier.xml"
-# I also have a face classifier in here, this file is a mess
-
 cap = cv.VideoCapture(0)
 
 if not cap.isOpened():
