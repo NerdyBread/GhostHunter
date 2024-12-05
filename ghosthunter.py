@@ -4,8 +4,8 @@ import cv2 as cv
 import numpy as np
 from random import randint, choice
 
-skull_path = r"C:\Users\afondacaro\ghostHunter\skull.png"
-ghost_path = r"C:\Users\afondacaro\ghostHunter\ghost.jpg"
+skull_path = r".\skull.png"
+ghost_path = r".\ghost.jpg"
 skull_img = cv.imread(skull_path)
 ghost_img = cv.imread(ghost_path)
 
